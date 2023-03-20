@@ -1,0 +1,251 @@
+	TÍTULO: Práctica 4: Montículos	│	     
+────────────────────────────────────────┴──────────────────────────────────┐
+	AUTOR:Iván Álvarez Fernandez        LOGIN 1:ivan.alvarez.fernandez │
+	AUTOR:Marcos Gómez Tejón	    LOGIN 2:m.tejon 		   │
+─────────────────────────┬─────────────────────────────────────────────────┘
+	GRUPO: 1.4  	 │
+─────────────────────────┤
+        FECHA: 14/10/2022│
+─────────────────────────┘
+
+─────────────────────────────────────────┐
+	CARACTERÍSTICAS DEL PROCESADOR:  ╠════════════════════════════════════╣
+─────────────────────────────────────────┘
+ Intel Core i5-1035G1
+ Max Freq:   3.600 GHz
+ Cores:  4 cores (8 threads)
+
+
+─────────────────────────────────────────┐
+	CARACTERÍSTICAS DEL EQUIPO:      ╠════════════════════════════════════╣
+─────────────────────────────────────────┘
+ OS: Linux Mint 21 x86_64 
+ Memoria RAM: 8,0 GiB
+ Arquitectura: 64 bits
+ GPU: Intel Iris Plus Graphics G1 
+
+
+─────────────────────────────────────────┐
+	INTRODUCCIÓN:	                 ╠════════════════════════════════════╣
+─────────────────────────────────────────┘
+En esta práctica se nos pide que implementemos y validemos el funcionamiento
+de las siguientes operaciones sobre montículos de máximos: crear_monticulo y
+eliminar_mayor.
+
+También que demostremos empíricamente que crear un montículo a 
+partir de un vector cualquiera con n elementos (operación crear_monticulo) 
+se ejecuta en un tiempo lineal (O(n)). 
+	
+La operación ord_monticulo debe ser implementada y su comportamiento validado.
+
+También debemos calcular empíricamente la complejidad del algoritmo de 
+ordenación para tres situaciones iniciales diferentes: (a) el vector ya está
+ordenado ascendentemente, (b) el vector ya está ordenado en orden
+descendente, y (c) el vector está inicialmente desordenado.
+
+
+
+─────────────────────────────────────────┐
+	DESCRIPCIÓN DE LA PRÁCTICA:      ╠════════════════════════════════════╣
+─────────────────────────────────────────┘
+
+OBSERVACIÓN: En caso de (*) usamos K = 1000, siendo K el numero de veces que se
+ejecuta el algoritmo. El tiempo se mide en microsegundos en todas las tablas.
+
+╠═════════════════════════════TEST DE MONTÍCULOS══════════════════════════════╣
+
+
+EL MONTÍCULO INICIAL ES:
+
+8(raíz) 
+5(hijo de 8) 4(hijo de 8) 
+2(hijo de 5) -2(hijo de 5) 1(hijo de 4) -1(hijo de 4) 
+-6(hijo de 2) 
+
+ELIMINAMOS EL MAYOR (8)
+
+5(raíz) 
+2(hijo de 5) 4(hijo de 5) 
+-6(hijo de 2) -2(hijo de 2) 1(hijo de 4) -1(hijo de 4) 
+
+ELIMINAMOS EL MAYOR (5)
+
+4(raíz) 
+2(hijo de 4) 1(hijo de 4) 
+-6(hijo de 2) -2(hijo de 2) -1(hijo de 1) 
+
+ELIMINAMOS EL MAYOR (4)
+
+2(raíz) 
+-1(hijo de 2) 1(hijo de 2) 
+-6(hijo de -1) -2(hijo de -1) 
+
+ELIMINAMOS EL MAYOR (2)
+
+1(raíz) 
+-1(hijo de 1) -2(hijo de 1) 
+-6(hijo de -1) 
+
+ELIMINAMOS EL MAYOR (1)
+
+-1(raíz) 
+-6(hijo de -1) -2(hijo de -1) 
+
+ELIMINAMOS EL MAYOR (-1)
+
+-2(raíz) 
+-6(hijo de -2) 
+
+ELIMINAMOS EL MAYOR (-2)
+
+-6(raíz) 
+
+ELIMINAMOS EL MAYOR (-6)
+El montículo está vacío
+
+
+
+╠══════════════════════════CREACIÓN DE MONTÍCULOS═════════════════════════════╣
+
+COMPLEJIDAD│
+───────────┴──────────────────┐
+Cota subestimada: n^0.8       │
+Cota ajustada: n              │
+Cota sobrestimada: n^1.2      │
+
+	   n          t(n)        Subestimada	  Ajustada      Sobrestimada
+                                   t/(n^0.8)         t/n         t/(n^1.2)
+				      
+(*)      1000      13.421000       0.053430       0.013421       0.003371
+(*)      2000      26.397000       0.060357       0.013198       0.002886
+(*)      4000      52.903000       0.069476       0.013226       0.002518
+(*)      8000     105.018000       0.079212       0.013127       0.002175
+(*)     16000     208.455000       0.090306       0.013028       0.001880
+(*)     32000     428.708000       0.106670       0.013397       0.001683
+        64000     784.000000       0.112040       0.012250       0.001339
+       128000    1575.000000       0.129274       0.012305       0.001171
+       256000    3225.000000       0.152033       0.012598       0.001044
+       512000    7485.000000       0.202664       0.014619       0.001055
+         
+         
+OBSERVACIONES: La cota ajustada tiende a valores alrededor de 0.013. La
+complejidad computacional es O(n). La cota subestimada crece cuando n tiende 
+a infinito y la sobrestimada tiende a 0 cuando n tiende a infinito.
+
+La complejidad es lineal dado que para crear un monticulo solo inicalizamos 
+un vector y marcamos el último elemento O(1) y después se hunden los elementos
+del vector hasta quedar colocado en forma de montículo (comparaciones O(1) e 
+intercambio de valores O(1)). Varias operaciones de complejidad O(1) forman 
+un algoritmo de complejidad lineal.
+===============================================================================
+-------------------------------------------------------------------------------
+===============================================================================
+
+
+		COMPROBAMOS SI UN VECTOR SE ORDENA BIEN:
+		
+EL VECTOR DESORDENADO ES:
+			-7 -5 -6 7 -7 1 -6 -4 -8 5 
+EL VECTOR ORDENADO ES:
+			-8 -7 -7 -6 -6 -5 -4 1 5 7 
+			
+
+╠════════════════════════════════════ASCENDENTE═══════════════════════════════╣
+
+COMPLEJIDAD│
+───────────┴───────────────────────┐	
+Cota subestimada: (n*log(n))^0.9   │
+Cota ajustada:  (n*log(n))         │
+Cota sobrestimada: (n*log(n))^1.1  │
+
+	   n          t(n)        Subestimada	  Ajustada      Sobrestimada
+                              t/(n*log(n))^0.9  t/(n*log(n))  t/(n*log(n))^1.1
+
+(*)      1000     111.665000       0.039130       0.016165       0.006678
+(*)      2000     269.391000       0.046417       0.017721       0.006765
+         4000     585.000000       0.049936       0.017633       0.006227
+         8000    1283.000000       0.054599       0.017845       0.005832
+        16000    2455.000000       0.052365       0.015850       0.004798
+        32000    5356.000000       0.057527       0.016135       0.004525
+        64000   11592.000000       0.062948       0.016367       0.004255
+       128000   26785.000000       0.073798       0.017794       0.004291
+(#)    256000   62098.000000       0.087080       0.019479       0.004357
+       512000  115778.000000       0.082864       0.017201       0.003571
+
+OBSERVACIONES: La cota ajustada tiende a valores alrededor de 0.017. La
+complejidad computacional es O(n*log(n)). La cota subestimada crece cuando n
+tiende a infinito y la sobrestimada tiende a 0 cuando n tiende a infinito.
+
+(#) Hay una anomalía en en n=256000.
+╠══════════════════════════════════DESCENDENTE════════════════════════════════╣
+
+
+
+COMPLEJIDAD│
+───────────┴───────────────────────┐
+Cota subestimada: (n*log(n))^0.9   │
+Cota ajustada:  (n*log(n))         │
+Cota sobrestimada: (n*log(n))^1.1  │
+
+	   n          t(n)        Subestimada	  Ajustada      Sobrestimada
+                              t/(n*log(n))^0.9  t/(n*log(n))  t/(n*log(n))^1.1
+
+(*)      1000      96.763000       0.033908       0.014008       0.005787
+(*)      2000     239.174000       0.041211       0.015733       0.006007
+         4000     617.000000       0.052667       0.018598       0.006567
+         8000    1279.000000       0.054429       0.017789       0.005814
+        16000    2984.000000       0.063649       0.019266       0.005832
+        32000    5148.000000       0.055293       0.015508       0.004350
+        64000   12165.000000       0.066060       0.017176       0.004466
+       128000   24265.000000       0.066855       0.016120       0.003887
+       256000   53719.000000       0.075330       0.016851       0.003769
+       512000  111467.000000       0.079779       0.016561       0.003438
+
+OBSERVACIONES: La cota ajustada tiende a valores alrededor de 0.016. La
+complejidad computacional es O(n*log(n)). La cota subestimada crece cuando n 
+tiende a infinito y la sobrestimada tiende a 0 cuando n tiende a infinito.
+
+╠═══════════════════════════════════ALEATORIO═════════════════════════════════╣
+
+
+
+COMPLEJIDAD│
+───────────┴───────────────────────┐	
+Cota subestimada: (n*log(n))^0.9   │
+Cota ajustada:   (n*log(n))^1.04   │
+Cota sobrestimada: (n*log(n))^1.1  │
+
+          n          t(n)       Subestimada     Ajustada       Sobrestimada
+                           t/(n*log(n))^0.9 t/(n*log(n))^1.04 t/(n*log(n))^1.1
+         
+(*)      1000     144.649000     0.050689       0.013459       0.008651
+(*)      2000     314.159000     0.054131       0.012769       0.007890
+         4000     655.000000     0.055911       0.011732       0.006972
+         8000    1441.000000     0.061323       0.011458       0.006551
+        16000    3185.000000     0.067936       0.011314       0.006224
+        32000    7417.000000     0.079664       0.011833       0.006267
+        64000   15415.000000     0.083708       0.011098       0.005659
+       128000   34274.000000     0.094431       0.011181       0.005490
+       256000   77601.000000     0.108820       0.011513       0.005445
+       512000  164655.000000     0.117846       0.011146       0.005078
+
+OBSERVACIONES: La cota ajustada tiende a valores alrededor de 0.011. La
+complejidad computacional es O((n*log(n))^1.04). La cota subestimada crece
+cuandon tiende a infinito y la sobrestimada tiende a 0 cuando n tiende a 
+infinito.
+
+
+			        /\/\/\/\/\/\/\/\
+				CONCLUSIÓN FINAL
+			        \/\/\/\/\/\/\/\/
+
+El algoritmo de ordenación se ajusta a la complejidad teórica en los 3 casos 
+propuestos. El algoritmo consiste en insertar los elementos en un 
+montículo creado en tiempo lineal e ir eliminando el mayor elemento, el cual
+se garda en un vector que dará como resultado el vector ya ordenado. Insertar
+en el monticulo y reordenarlo son de orden logarítmico (un montículo no deja 
+de ser un arbol) e ir eliminando e insertando los elementos en el nuevo vector
+se hace en tiempo lineal, por tanto, la complejidad total es n*log(n). Los tiempos 
+son muy parecidos tanto para vectores desordenados, como ordenados 
+ascendentemente, como descendentemente; lo único que varía algo es la 
+cantidad de veces que se llama a la función hundir.
